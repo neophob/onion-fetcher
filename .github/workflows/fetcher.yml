@@ -8,7 +8,7 @@ on:
 jobs:
   onion-request:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
 
     steps:
     - name: Checkout Repository
@@ -24,7 +24,7 @@ jobs:
         docker run --rm -v $(pwd)/output:/output tor-curl sh -c \
           "tor > tor.log 2>&1 & \
           echo 'Waiting for Tor to bootstrap...' && \
-          while ! grep -q 'Bootstrapped 100% (done): Done' tor.log; do \
+          while ! grep -q 'Bootstrapped 100%' tor.log; do \
             sleep 1; \
           done && \
           echo 'Tor is ready!' && \
