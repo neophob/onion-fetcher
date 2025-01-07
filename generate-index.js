@@ -81,10 +81,10 @@ fs.readdir(outputDir, (err, files) => {
           overflow: auto; /* Allow scrolling if the image is taller than the screen */
         }
         .image-fullscreen img {
-          width: 100%; /* Make the image full width */
-          height: auto; /* Maintain aspect ratio */
+          width: auto; /* Display the image in its natural width */
+          max-width: 100%; /* Ensure the image doesn't exceed the viewport width */
+          height: auto; /* Allow the height to scale with the aspect ratio */
           object-fit: contain; /* Ensure the image fits within the viewport */
-          max-height: none; /* Allow image to stretch vertically */
         }
       </style>
     </head>
