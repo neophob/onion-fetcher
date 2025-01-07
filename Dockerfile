@@ -18,6 +18,7 @@ ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
 RUN echo -e "SocksPort 0.0.0.0:9050\nControlPort 9051\nCookieAuthentication 0" > /etc/tor/torrc
 
 COPY package.json /app/package.json
+COPY package-lock.json /app/package-lock.json
 COPY fetch.js /app/fetch.js
 
 WORKDIR /app
