@@ -56,16 +56,16 @@ fs.readdir(outputDir, (err, files) => {
           height: 500px; /* Cap the height to 500px */
         }
         .image {
-          width: 400px;  /* Ensure the image width is at least 400px */
+          width: 100%;  /* Make the image width 100% of the container */
           height: auto; /* Maintain aspect ratio */
           max-height: 500px; /* Cap the height to 500px */
-          object-fit: none; /* Don't scale the image, just show the top part */
-          object-position: top; /* Ensure the top of the image is shown */
+          object-fit: none; /* Allow image to overflow horizontally */
+          object-position: top; /* Ensure the top of the image is visible */
           cursor: pointer;
           transition: transform 0.3s ease;
         }
         .image:hover {
-          transform: scale(1.1); /* Slight zoom effect on hover */
+          transform: scale(1.2); /* Zoom in horizontally on hover */
         }
         .image-fullscreen {
           display: none;
@@ -76,13 +76,15 @@ fs.readdir(outputDir, (err, files) => {
           height: 100%;
           background-color: rgba(0, 0, 0, 0.8);
           justify-content: center;
-          align-items: center;
+          align-items: flex-start; /* Align top of image to top of the screen */
           z-index: 1000;
+          overflow: auto; /* Allow scrolling if the image is taller than the screen */
         }
         .image-fullscreen img {
-          max-width: 90%;
-          max-height: 90%;
-          object-fit: contain;
+          width: 100%; /* Make the image full width */
+          height: auto; /* Maintain aspect ratio */
+          object-fit: contain; /* Ensure the image fits within the viewport */
+          max-height: none; /* Allow image to stretch vertically */
         }
       </style>
     </head>
@@ -121,8 +123,10 @@ fs.readdir(outputDir, (err, files) => {
         });
 
         // Close fullscreen view when clicking outside the image
-        fullscreenModal.addEventListener('click', () => {
-          fullscreenModal.style.display = 'none';
+        fullscreenModal.addEventListener('click', (e) => {
+          if (e.target === fullscreenModal) {
+            fullscreenModal.style.display = 'none';
+          }
         });
       </script>
     </body>
