@@ -2,10 +2,10 @@ const puppeteer = require("puppeteer");
 const { exec } = require("child_process");
 const fs = require("fs/promises");
 
-const fetchOnion = async (url, outputDir, group) => {
+const fetchOnion = async (url, outputDir, _group) => {
   try {
     console.log(`Fetching content from: ${url}`);
-    const group = group.replace("/", "").replace(" ", "").toLowerCase();
+    const group = _group.replace("/", "").replace(" ", "").toLowerCase();
     const filename = group + "-" + url.replace("http://", "").replace("/", "");
 
     const htmlFile = `${outputDir}/${filename}.html`;
