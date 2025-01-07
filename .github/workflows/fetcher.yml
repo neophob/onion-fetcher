@@ -21,7 +21,7 @@ jobs:
       run: |
         mkdir -p output
         docker run --rm -v $(pwd)/output:/output tor-curl sh -c \
-          "tor & sleep 10 && \
+          "tor & sleep 16 && \
           node /app/fetch.js http://z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion/ /output && \
           node /app/fetch.js http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/ /output"
 
