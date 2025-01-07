@@ -31,4 +31,10 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: onion-outputs
-        path: /output/**
+        path: ./output/**
+
+    - name: Upload Onion Outputs 2 as Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: onion-outputs2
+        path: /output
