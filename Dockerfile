@@ -21,7 +21,7 @@ COPY package.json /app/package.json
 COPY fetch.js /app/fetch.js
 
 WORKDIR /app
-RUN npm install
+RUN npm ci
 
 EXPOSE 9050 9051
 
