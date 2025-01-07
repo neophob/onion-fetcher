@@ -6,7 +6,10 @@ const fetchOnion = async (url, outputDir, _group) => {
   try {
     console.log(`Fetching content from: ${url}`);
     const group = _group.replace("/", "").replace(" ", "").toLowerCase();
-    const filename = group + "-" + url.replace("http://", "").replace("https://", "").replace("/", "");
+    const filename =
+      group +
+      "-" +
+      url.replace("http://", "").replace("https://", "").replace("/", "");
 
     const htmlFile = `${outputDir}/${filename}.html`;
     await new Promise((resolve, reject) => {
@@ -32,8 +35,8 @@ const fetchOnion = async (url, outputDir, _group) => {
         "--disable-setuid-sandbox",
         "--disable-gpu",
         "--disable-accelerated-2d-canvas",
-//        "--disable-dev-shm-usage",
-//        "--single-process",
+        //        "--disable-dev-shm-usage",
+        //        "--single-process",
       ],
       executablePath: "/usr/bin/chromium-browser",
       headless: "new",
@@ -44,10 +47,11 @@ const fetchOnion = async (url, outputDir, _group) => {
     const page = await browser.newPage();
 
     await page.setExtraHTTPHeaders({
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-      'Accept-Language': 'en-US,en;q=0.9',
-      'Accept-Encoding': 'gzip, deflate, br',
-      'Connection': 'keep-alive',
+      "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      "Accept-Language": "en-US,en;q=0.9",
+      "Accept-Encoding": "gzip, deflate, br",
+      Connection: "keep-alive",
     });
 
     console.log("Step 4: Navigate and wait for full page load");
