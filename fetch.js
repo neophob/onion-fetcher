@@ -5,17 +5,17 @@ const fs = require("fs/promises");
 const fetchOnion = async (url, outputDir, _group) => {
   try {
     console.log(`Fetching content from: ${url}`);
-    const group = _group.replace("/", "").replace(" ", "").toLowerCase();
+    const group = _group.replaceAll("/", "").replaceAll(" ", "").toLowerCase();
     const filename =
       group +
       "-" +
-      url.replace("http://", "").replace("https://", "").replace("/", "");
+      url.replace("http://", "").replace("https://", "").replaceAll("/", "");
 
     const htmlFile = `${outputDir}/${filename}.html`;
     await new Promise((resolve, reject) => {
       console.log("Step 1: Fetch HTML using curl");
       // ignore SSL errors, self signed certs!
-      const curlCommand = `curl --insecure --socks5-hostname 127.0.0.1:9050 ${url} -o ${htmlFile}`;
+      const curlCommand = `curl -L --insecure --socks5-hostname 127.0.0.1:9050 ${url} -o ${htmlFile}`;
       exec(curlCommand, (error, stdout, stderr) => {
         if (error) {
           console.error(`curl error: ${stderr}`);
