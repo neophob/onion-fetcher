@@ -15,13 +15,13 @@ RUN apk add --no-cache \
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
-RUN echo "SocksPort 0.0.0.0:9050\nControlPort 9051\nCookieAuthentication 0" > /etc/tor/torrc
+RUN echo -e "SocksPort 0.0.0.0:9050\nControlPort 9051\nCookieAuthentication 0" > /etc/tor/torrc
 
 COPY package.json /app/package.json
+COPY fetch.js /app/fetch.js
+
 WORKDIR /app
 RUN npm install
-
-COPY fetch.js /fetch.js
 
 EXPOSE 9050 9051
 

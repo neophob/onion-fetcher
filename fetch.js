@@ -7,7 +7,7 @@ const fetchOnion = async (url, outputDir) => {
     console.log(`Fetching content from: ${url}`);
 
     // Step 1: Fetch HTML using curl
-    const htmlFile = `${outputDir}/output.html`;
+    const htmlFile = `${outputDir}/${url}.html`;
     await new Promise((resolve, reject) => {
       const curlCommand = `curl --socks5-hostname 127.0.0.1:9050 ${url} -o ${htmlFile}`;
       exec(curlCommand, (error, stdout, stderr) => {
@@ -25,9 +25,10 @@ const fetchOnion = async (url, outputDir) => {
     const browser = await puppeteer.launch({
       args: ['--proxy-server=socks5://127.0.0.1:9050', '--no-sandbox'],
       executablePath: '/usr/bin/chromium-browser',
+      headless: 'new',  // Opting into the new headless mode
     });
     const page = await browser.newPage();
-    const screenshotFile = `${outputDir}/screenshot.png`;
+    const screenshotFile = `${outputDir}/${url}.png`;
 
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
     await page.screenshot({ path: screenshotFile });

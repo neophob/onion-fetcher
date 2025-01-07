@@ -22,8 +22,8 @@ jobs:
         mkdir -p output
         docker run --rm -v $(pwd)/output:/output tor-curl sh -c \
           "tor & sleep 10 && \
-          curl --socks5-hostname 127.0.0.1:9050 http://z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion/ -o /output/z6_output.html && \
-          curl --socks5-hostname 127.0.0.1:9050 http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/ -o /output/ransom_output.html"
+          node /app/fetch.js http://z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion/ /output && \
+          node /app/fetch.js http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/ /output"
 
     - name: Upload Onion Outputs as Artifacts
       uses: actions/upload-artifact@v3
