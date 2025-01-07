@@ -7,9 +7,9 @@ const fetchOnion = async (url, outputDir) => {
     console.log(`Fetching content from: ${url}`);
     const filename = url.replace('http://','').replace('/','');
 
-    // Step 1: Fetch HTML using curl
     const htmlFile = `${outputDir}/${filename}.html`;
     await new Promise((resolve, reject) => {
+      console.log('Step 1: Fetch HTML using curl');
       const curlCommand = `curl --socks5-hostname 127.0.0.1:9050 ${url} -o ${htmlFile}`;
       exec(curlCommand, (error, stdout, stderr) => {
         if (error) {
@@ -22,17 +22,25 @@ const fetchOnion = async (url, outputDir) => {
       });
     });
 
-    // Step 2: Capture screenshot using Puppeteer
+    console.log('Step 2: Capture screenshot using Puppeteer');
     const browser = await puppeteer.launch({
       args: ['--proxy-server=socks5://127.0.0.1:9050', '--no-sandbox'],
       executablePath: '/usr/bin/chromium-browser',
       headless: 'new',  // Opting into the new headless mode
     });
     const page = await browser.newPage();
+
     const screenshotFile = `${outputDir}/${filename}.png`;
 
-    await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
-    await page.screenshot({ path: screenshotFile });
+    // Navigate and wait for full page load
+    await page.goto(url, { waitUntil: 'networkidle0', timeout: 120000 });  // Wait for full load
+    await page.waitForSelector('body');  // Wait until the body tag is available
+
+    // Capture the full page (even if it has multiple pages)
+    await page.screenshot({
+      path: screenshotFile,
+      fullPage: true  // This captures the entire page, including parts outside the visible area
+    });
     console.log(`Screenshot saved to ${screenshotFile}`);
 
     await browser.close();
