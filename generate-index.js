@@ -65,7 +65,7 @@ fs.readdir(outputDir, (err, files) => {
           transition: transform 0.3s ease;
         }
         .image:hover {
-          transform: scale(1.05); /* Zoom in horizontally on hover */
+          transform: scale(1.03); /* Zoom in horizontally on hover */
         }
         .image-fullscreen {
           display: none;

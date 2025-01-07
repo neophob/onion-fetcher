@@ -23,19 +23,19 @@ jobs:
         mkdir -p output
         docker run --rm -v $(pwd)/output:/output tor-curl sh -c \
           "tor & sleep 16 && \
-          node /app/fetch.js http://z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion/ /output 'Ransomware blog' && \
+          node /app/fetch.js http://z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion/ /output 'RansomwareBlog' && \
           node /app/fetch.js http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/ /output 'Everest' && \
-          node /app/fetch.js http://threeamkelxicjsaf2czjyz2lc4q3ngqkxhhlexyfcp2o6raw4rphyad.onion/ /output 'slug' && \
+          node /app/fetch.js http://threeamkelxicjsaf2czjyz2lc4q3ngqkxhhlexyfcp2o6raw4rphyad.onion/ /output 'Slug' && \
           node /app/fetch.js http://rhysidafc6lm7qa2mkiukbezh7zuth3i4wof4mh2audkymscjm6yegad.onion/ /output 'Rhysida' && \
           node /app/fetch.js http://zohlm7ahjwegcedoz7lrdrti7bvpofymcayotp744qhx6gjmxbuo2yid.onion/ /output 'RansomHouse' && \
           node /app/fetch.js http://k7kg3jqxang3wh7hnmaiokchk7qoebupfgoik6rha6mjpzwupwtj25yd.onion/ /output 'Play' && \
           node /app/fetch.js http://mblogci3rudehaagbryjznltdp33ojwzkq6hn2pckvjq33rycmzczpid.onion/ /output 'Monti' && \
-          node /app/fetch.js http://blogvl7tjyjvsfthobttze52w36wwiz34hrfcmorgvdzb6hikucb7aqd.onion/ /output 'Money Message' && \
-          node /app/fetch.js http://lockbit7z2jwcskxpbokpemdxmltipntwlkmidcll2qirbu7ykg46eyd.onion/ /output 'Lock Bit 3' && \
+          node /app/fetch.js http://blogvl7tjyjvsfthobttze52w36wwiz34hrfcmorgvdzb6hikucb7aqd.onion/ /output 'MoneyMessage' && \
+          node /app/fetch.js http://lockbit7z2jwcskxpbokpemdxmltipntwlkmidcll2qirbu7ykg46eyd.onion/ /output 'LockBit3' && \
           node /app/fetch.js https://hunters55rdxciehoqzwv7vgyv6nt37tbwax2reroyzxhou7my5ejyid.onion/companies/1413615849 /output 'Hunters' && \
           node /app/fetch.js http://ciphbitqyg26jor7eeo6xieyq7reouctefrompp6ogvhqjba7uo4xdid.onion/ /output 'CiphBit' && \
           node /app/fetch.js https://cactusbloguuodvqjmnzlwetjlpj6aggc6iocwhuupb47laukux7ckid.onion/ /output 'Cactus' && \
-          node /app/fetch.js http://weg7sdx54bevnvulapqu6bpzwztryeflq3s23tegbmnhkbpqz637f2yd.onion/ /output 'Black Suit' && \
+          node /app/fetch.js http://weg7sdx54bevnvulapqu6bpzwztryeflq3s23tegbmnhkbpqz637f2yd.onion/ /output 'BlackSuit' && \
           node /app/fetch.js http://3ev4metjirohtdpshsqlkrqcmxq6zu3d7obrdhglpy5jpbr7whmlfgqd.onion/ /output 'Abyss' && \
           node /app/generate-index.js /output && \
           ls -al /output/"

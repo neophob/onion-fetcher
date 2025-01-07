@@ -2,15 +2,16 @@ const puppeteer = require("puppeteer");
 const { exec } = require("child_process");
 const fs = require("fs/promises");
 
-const fetchOnion = async (url, outputDir) => {
+const fetchOnion = async (url, outputDir, group) => {
   try {
     console.log(`Fetching content from: ${url}`);
     const filename = url.replace("http://", "").replace("/", "");
 
-    const htmlFile = `${outputDir}/${filename}.html`;
+    const htmlFile = `${outputDir}/${group}-${filename}.html`;
     await new Promise((resolve, reject) => {
       console.log("Step 1: Fetch HTML using curl");
-      const curlCommand = `curl --socks5-hostname 127.0.0.1:9050 ${url} -o ${htmlFile}`;
+      // ignore SSL errors, self signed certs!
+      const curlCommand = `curl --insecure --socks5-hostname 127.0.0.1:9050 ${url} -o ${htmlFile}`;
       exec(curlCommand, (error, stdout, stderr) => {
         if (error) {
           console.error(`curl error: ${stderr}`);
@@ -86,5 +87,5 @@ const fetchOnion = async (url, outputDir) => {
   await fs.mkdir(outputDir, { recursive: true });
 
   // Fetch the onion content
-  await fetchOnion(url, outputDir);
+  await fetchOnion(url, outputDir, group);
 })();
