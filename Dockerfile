@@ -1,20 +1,29 @@
-# Basis-Image
-FROM debian:bullseye-slim
+# Base image
+FROM node:20-alpine
 
-# Installiere notwendige Pakete
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache \
     tor \
     curl \
     nano \
-    --no-install-recommends && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    chromium \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    && rm -rf /var/cache/apk/*
 
-# Konfiguriere Tor (minimal)
-RUN echo "SocksPort 0.0.0.0:9050\nControlPort 9051\nCookieAuthentication 0" > /etc/tor/torrc
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+RUN echo "SocksPort 9050\nControlPort 9051\nCookieAuthentication 0" > /etc/tor/torrc
 
-# Exponiere Tor-Ports
+COPY package.json /app/package.json
+WORKDIR /app
+RUN npm install
+
+COPY fetch.js /fetch.js
+
 EXPOSE 9050 9051
 
-# Startbefehl für Tor
-CMD ["tor"]
+CMD ["sh"]
 

@@ -1,0 +1,12 @@
+{
+    "name": "tor-fetcher",
+    "version": "1.0.0",
+    "description": "Fetch HTML and screenshots from onion addresses using curl and Puppeteer",
+    "main": "fetch.js",
+    "scripts": {
+      "start": "node fetch.js"
+    },
+    "dependencies": {
+      "puppeteer": "^21.3.8"
+    }
+  }
