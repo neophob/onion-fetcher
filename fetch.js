@@ -33,8 +33,8 @@ const fetchOnion = async (url, outputDir) => {
       ],
       executablePath: "/usr/bin/chromium-browser",
       headless: "new",
-      timeout: 160000,
-      protocolTimeout: 160000,
+      timeout: 300000,
+      protocolTimeout: 300000,
     });
     console.log("Step 3: wait for new page");
     const page = await browser.newPage();
