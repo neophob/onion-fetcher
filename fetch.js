@@ -26,21 +26,23 @@ const fetchOnion = async (url, outputDir) => {
     const browser = await puppeteer.launch({
       args: ['--proxy-server=socks5://127.0.0.1:9050', '--no-sandbox'],
       executablePath: '/usr/bin/chromium-browser',
-      headless: 'new',  // Opting into the new headless mode
+      headless: 'new',
+      timeout: 160000,
+      protocolTimeout: 160000
     });
+    console.log('Step 3: wait for new page');
     const page = await browser.newPage();
 
-    const screenshotFile = `${outputDir}/${filename}.png`;
-
-    // Navigate and wait for full page load
+    console.log('Step 4: Navigate and wait for full page load');
     await page.goto(url, { waitUntil: 'networkidle0', timeout: 120000 });  // Wait for full load
     await page.waitForSelector('body');  // Wait until the body tag is available
 
-    // Capture the full page (even if it has multiple pages)
+    console.log('Step 5: Capture the full page (even if it has multiple pages)');
     await page.screenshot({
       path: screenshotFile,
-      fullPage: true  // This captures the entire page, including parts outside the visible area
+      fullPage: true
     });
+    const screenshotFile = `${outputDir}/${filename}.png`;
     console.log(`Screenshot saved to ${screenshotFile}`);
 
     await browser.close();
