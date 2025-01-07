@@ -5,9 +5,10 @@ const fs = require('fs/promises');
 const fetchOnion = async (url, outputDir) => {
   try {
     console.log(`Fetching content from: ${url}`);
+    const filename = url.replace('http://','').replace('/','');
 
     // Step 1: Fetch HTML using curl
-    const htmlFile = `${outputDir}/${url}.html`;
+    const htmlFile = `${outputDir}/${filename}.html`;
     await new Promise((resolve, reject) => {
       const curlCommand = `curl --socks5-hostname 127.0.0.1:9050 ${url} -o ${htmlFile}`;
       exec(curlCommand, (error, stdout, stderr) => {
@@ -28,7 +29,7 @@ const fetchOnion = async (url, outputDir) => {
       headless: 'new',  // Opting into the new headless mode
     });
     const page = await browser.newPage();
-    const screenshotFile = `${outputDir}/${url}.png`;
+    const screenshotFile = `${outputDir}/${filename}.png`;
 
     await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
     await page.screenshot({ path: screenshotFile });
