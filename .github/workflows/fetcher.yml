@@ -25,9 +25,10 @@ jobs:
           "tor & sleep 16 && \
           node /app/fetch.js http://z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion/ /output && \
           node /app/fetch.js http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/ /output"
+        ls -al /output/
 
     - name: Upload Onion Outputs as Artifacts
       uses: actions/upload-artifact@v3
       with:
         name: onion-outputs
-        path: /output
+        path: /output/**
