@@ -41,6 +41,13 @@ const fetchOnion = async (url, outputDir) => {
     console.log("Step 3: wait for new page");
     const page = await browser.newPage();
 
+    await page.setExtraHTTPHeaders({
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Connection': 'keep-alive',
+    });
+
     console.log("Step 4: Navigate and wait for full page load");
     await page.goto(url, { waitUntil: "networkidle0", timeout: 120000 }); // Wait for full load
     await page.waitForSelector("body"); // Wait until the body tag is available
