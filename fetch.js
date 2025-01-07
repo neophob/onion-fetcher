@@ -49,9 +49,9 @@ const fetchOnion = async (url, outputDir, _group) => {
 
     await page.setViewport({
       width: 1024,
-      height: 800,
+/*      height: 800,
       deviceScaleFactor: 1,
-      isMobile: false
+      isMobile: false*/
     });
 
     await page.setExtraHTTPHeaders({
