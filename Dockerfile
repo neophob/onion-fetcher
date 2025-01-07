@@ -20,6 +20,7 @@ RUN echo -e "SocksPort 0.0.0.0:9050\nControlPort 9051\nCookieAuthentication 0" >
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
 COPY fetch.js /app/fetch.js
+COPY generate-index.js /app/generate-index.js
 
 WORKDIR /app
 RUN npm ci
