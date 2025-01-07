@@ -53,19 +53,24 @@ fs.readdir(outputDir, (err, files) => {
         .image-container {
           position: relative;
           overflow: hidden;
-          height: 500px; /* Cap the height to 500px */
         }
         .image {
-          width: 100%;  /* Make the image width 100% of the container */
-          height: auto; /* Maintain aspect ratio */
-          max-height: 500px; /* Cap the height to 500px */
-          object-fit: none; /* Allow image to overflow horizontally */
-          object-position: top; /* Ensure the top of the image is visible */
+          width: 100%;
+          height: auto;
+          max-height: 500px;
+          object-fit: none;
+          object-position: top;
           cursor: pointer;
           transition: transform 0.3s ease;
         }
         .image:hover {
-          transform: scale(1.03); /* Zoom in horizontally on hover */
+          transform: scale(1.03);
+        }
+        .caption {
+          text-align: center;
+          font-size: 14px;
+          color: #555;
+          margin-top: 5px;
         }
         .image-fullscreen {
           display: none;
@@ -76,15 +81,14 @@ fs.readdir(outputDir, (err, files) => {
           height: 100%;
           background-color: rgba(0, 0, 0, 0.8);
           justify-content: center;
-          align-items: flex-start; /* Align top of image to top of the screen */
+          align-items: flex-start;
           z-index: 1000;
-          overflow: auto; /* Allow scrolling if the image is taller than the screen */
+          overflow: auto;
         }
         .image-fullscreen img {
-          width: auto; /* Display the image in its natural width */
-          max-width: 100%; /* Ensure the image doesn't exceed the viewport width */
-          height: auto; /* Allow the height to scale with the aspect ratio */
-          object-fit: contain; /* Ensure the image fits within the viewport */
+          width: auto;
+          max-width: 100%;
+          height: auto;
         }
       </style>
     </head>
@@ -92,12 +96,15 @@ fs.readdir(outputDir, (err, files) => {
       <div class="gallery">
   `;
 
-  // Add each image to the HTML
+  // Add each image with a caption to the HTML
   images.forEach(image => {
-    const imagePath = `${image}`; // Update this if you need to adjust the path
+    const groupFileame = image.split('-');
+    const imagePath = `${image}`; // Adjust the path if needed
+    const captionText = `${groupFileame[0]}: ${groupFileame[1]}`; // Customize the text for each image
     htmlContent += `
       <div class="image-container">
         <img src="${imagePath}" alt="${image}" class="image">
+        <div class="caption">${captionText}</div>
       </div>
     `;
   });
