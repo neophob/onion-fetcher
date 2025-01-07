@@ -73,11 +73,14 @@ const fetchOnion = async (url, outputDir) => {
   const args = process.argv.slice(2);
   const url = args[0];
   const outputDir = args[1] || "./output";
+  const group = args[2] || "Unknown";
 
   if (!url) {
     console.error("Usage: node fetch.js <URL> [OUTPUT_DIR]");
     process.exit(1);
   }
+
+  console.log("Analyse", group);
 
   // Ensure output directory exists
   await fs.mkdir(outputDir, { recursive: true });
