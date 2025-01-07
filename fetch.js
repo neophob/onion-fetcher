@@ -6,7 +6,7 @@ const fetchOnion = async (url, outputDir, _group) => {
   try {
     console.log(`Fetching content from: ${url}`);
     const group = _group.replace("/", "").replace(" ", "").toLowerCase();
-    const filename = group + "-" + url.replace("http://", "").replace("/", "");
+    const filename = group + "-" + url.replace("http://", "").replace("https://", "").replace("/", "");
 
     const htmlFile = `${outputDir}/${filename}.html`;
     await new Promise((resolve, reject) => {
