@@ -35,6 +35,7 @@ const fetchOnion = async (url, outputDir, _group) => {
         "--disable-setuid-sandbox",
         "--disable-gpu",
         "--disable-accelerated-2d-canvas",
+        "--ignore-certificate-errors",
         //        "--disable-dev-shm-usage",
         //        "--single-process",
       ],

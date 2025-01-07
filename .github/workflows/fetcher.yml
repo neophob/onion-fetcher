@@ -22,7 +22,12 @@ jobs:
       run: |
         mkdir -p output
         docker run --rm -v $(pwd)/output:/output tor-curl sh -c \
-          "tor & sleep 16 && \
+          "tor > tor.log 2>&1 & \
+          echo 'Waiting for Tor to bootstrap...' && \
+          while ! grep -q 'Bootstrapped 100% (done): Done' tor.log; do \
+            sleep 1; \
+          done && \
+          echo 'Tor is ready!' && \
           node /app/fetch.js http://z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion/ /output 'RansomwareBlog' && \
           node /app/fetch.js http://ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion/ /output 'Everest' && \
           node /app/fetch.js http://threeamkelxicjsaf2czjyz2lc4q3ngqkxhhlexyfcp2o6raw4rphyad.onion/ /output 'Slug' && \
