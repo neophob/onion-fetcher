@@ -28,6 +28,8 @@ const fetchOnion = async (url, outputDir) => {
         "--proxy-server=socks5://127.0.0.1:9050",
         "--no-sandbox",
         "--disable-setuid-sandbox",
+        "--disable-gpu",
+        "--disable-accelerated-2d-canvas",
 //        "--disable-dev-shm-usage",
 //        "--single-process",
       ],
@@ -46,11 +48,11 @@ const fetchOnion = async (url, outputDir) => {
     console.log(
       "Step 5: Capture the full page (even if it has multiple pages)",
     );
+    const screenshotFile = `${outputDir}/${filename}.png`;
     await page.screenshot({
       path: screenshotFile,
       fullPage: true,
     });
-    const screenshotFile = `${outputDir}/${filename}.png`;
     console.log(`Screenshot saved to ${screenshotFile}`);
 
     await browser.close();
