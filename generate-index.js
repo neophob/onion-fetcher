@@ -53,17 +53,19 @@ fs.readdir(outputDir, (err, files) => {
         .image-container {
           position: relative;
           overflow: hidden;
-          height: 500px;
+          height: 500px; /* Cap the height to 500px */
         }
         .image {
-          width: 100%;
-          height: 100%;
-          object-fit: contain;
+          width: 400px;  /* Ensure the image width is at least 400px */
+          height: auto; /* Maintain aspect ratio */
+          max-height: 500px; /* Cap the height to 500px */
+          object-fit: none; /* Don't scale the image, just show the top part */
+          object-position: top; /* Ensure the top of the image is shown */
           cursor: pointer;
           transition: transform 0.3s ease;
         }
         .image:hover {
-          transform: scale(1.05);
+          transform: scale(1.1); /* Slight zoom effect on hover */
         }
         .image-fullscreen {
           display: none;
