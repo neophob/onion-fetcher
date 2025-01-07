@@ -100,7 +100,9 @@ fs.readdir(outputDir, (err, files) => {
   images.forEach(image => {
     const groupFileame = image.split('-');
     const imagePath = `${image}`; // Adjust the path if needed
-    const captionText = `${groupFileame[0]}: ${groupFileame[1]}`; // Customize the text for each image
+    const group = groupFileame[0];
+    const url = groupFileame[1].replace(".png", "");
+    const captionText = `${group}: ${url}`; // Customize the text for each image
     htmlContent += `
       <div class="image-container">
         <img src="${imagePath}" alt="${image}" class="image">
