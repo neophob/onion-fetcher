@@ -47,6 +47,7 @@ const fetchOnion = async (url, outputDir, _group) => {
     console.log("Step 3: wait for new page");
     const page = await browser.newPage();
 
+    //TODO
 /*    await page.setViewport({
       width: 1024,
       height: 800,
