@@ -1,0 +1,631 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+	<head>
+		<title>Rhysida</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link href="./css/bootstrap.min.css" rel="stylesheet" />
+		<link href="./css/viewer.min.css" rel="stylesheet" />
+		<script type="text/javascript" src="./js/jquery-3.6.4.min.js"></script>
+		<script type="text/javascript" src="./js/popper.min.js"></script>
+		<script type="text/javascript" src="./js/bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="./js/viewer.min.js"></script>
+		<style type="text/css">
+			/*
+			@font-face {
+				font-family: Roadrage;
+				src: url("./fonts/Roadrage.otf") format("opentype");
+				font-weight: normal;
+				font-style: normal;
+			}
+			.name {
+				font-family: Roadrage;
+			}
+			*/
+			@font-face {
+				font-family: "Snake-Mix";
+				src: url("./fonts/Snake-Mix.ttf.woff") format('woff'),
+					url("./fonts/Snake-Mix.ttf.svg#Snake-Mix") format('svg'),
+					url("./fonts/Snake-Mix.ttf.eot"),
+					url("./fonts/Snake-Mix.ttf.eot?#iefix") format('embedded-opentype');
+				font-weight: normal;
+				font-style: normal;
+			}
+			.hidden_name {
+				font-family: "Snake-Mix";
+			}
+			body:before {
+				content: "";
+				position: absolute;
+				width: 45vw;
+				height: 30vw;
+				top: -5vw;
+				left: -15vw;
+				z-index: -1;
+				background-image: url(/back.png);
+				background-position: left top;
+				background-repeat: no-repeat;
+				background-size: contain;
+				transform: rotate(-90deg);
+			}
+			.auctions {
+				animation: auctions 2s linear infinite;
+			}
+
+			@keyframes auctions {
+				50% {
+					box-shadow: 0 0 30px #dc3545;
+				}
+			}
+			.error {
+				animation: shake 0.2s ease-in-out 0s 2;
+				box-shadow: 0 0 0.5em red;
+			}
+			@keyframes shake {
+				0% { margin-left: 0rem; }
+				25% { margin-left: 0.5rem; }
+				75% { margin-left: -0.5rem; }
+				100% { margin-left: 0rem; }
+			}
+			.r_back {
+				background-color: #6db8ec !important;
+			}
+			.auction_captcha_holder img {
+				max-width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container mb-5">
+						<p class="auctions position-relative bg-danger text-white py-2 px-4 rounded mt-2 border border-danger" style="width: fit-content; left: calc(75% - 180px); cursor: pointer;" id="auctions_online">2 auctions online</p>
+							<p class="position-relative bg-secondary text-white py-2 px-4 rounded mt-2 border border-secondary" style="width: fit-content; left: 75%; cursor: pointer; top: -58px;" id="companies_online">153 Companies</p>
+			<div class="w-100 mt-5">
+				<img src="./logos/logo.png" class="d-inline-block align-top rounded float-start w-100" alt="logo" />
+			</div>
+			<div class="row justify-content-center gx-5">
+				<div class="col col-4 gy-5 cell">
+					<div class="border m-2 p-2" style="height: calc(100% - 1rem) !important;">						
+						<div class="form-group m-2 token_check_holder">
+							<label for="token_check" class="form-label h4">Token</label>
+							<input type="text" class="form-control" id="token_check" placeholder="Enter Token and press Enter key">
+						</div>
+						<form id="token_form" class="d-none">
+							<input type="hidden" name="token_token" id="token_token" value="" />
+							<div class="form-group m-2">
+								<p class="">ALARM: POTENTIAL BREACH DETECTED</p>
+								<p class="">Attention! A potential breach has been identified within your system. Your immediate cooperation is required to address this critical situation. As a company that provides a unique decryptor tool, we recommend you not to hesitate in providing the information we request. Your prompt response is essential for swift resolution and restoration of your safety. We strongly advise you not to collaborate with the police, as it may result in wasted time and financial loss. Such actions are detrimental to the well-being of your business.</p>
+							</div>
+							<div class="form-group m-2">
+								<label for="token_name_domain" class="form-label">Enter the name of your organization and domain</label>
+								<input type="text" class="form-control" id="token_name_domain" name="token_name_domain" placeholder="Name of your organization and domain" />
+							</div>
+							<div class="form-group m-2">
+								<label for="token_domain_admins" class="form-label">Specify the Domain Administrator accounts, separated by commas</label>
+								<textarea class="form-control" id="token_domain_admins" name="token_domain_admins" placeholder="Domain Administrator accounts"></textarea>
+							</div>
+							<div class="form-group m-2">
+								<label for="token_email" class="form-label">Email to contact</label>
+								<input type="text" class="form-control" id="token_email" name="token_email" placeholder="Email to contact"></input>
+							</div>
+							<div class="form-group m-2">
+								<label for="token_comment" class="form-label">If you have something to say or if you represent a recovery company, please provide any additional information that you believe would be helpful in our conversation.</label>
+								<textarea class="form-control" id="token_comment" name="token_comment" placeholder="Comment"></textarea>
+							</div>
+							<div class="form-group m-2">
+								<button type="button" class="btn btn-secondary" id="token_send">Send</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row gx-5">
+				<div class="col-md gy-5 cell">
+					<div id="last_auction" class="border m-2 p-2"></div>
+				</div>
+				<div class="col-md gy-5 cell">
+					<div id="last_company" class="border m-2 p-2"></div>
+					<div id="penultimate_company" class="border m-2 p-2"></div>
+				</div>
+			</div>
+			<div class="row gx-5">
+				<div class="col gy-5 cell">
+					<div class="border m-2 p-2 h-100">
+						<p class="h4 text-center">NEWS</p>
+						<p class="text-center">We will post news about our company here<br />If you see news about us, send them to us and we will post it here</p>
+						<div id="last_news" class="border m-2 p-2"></div>
+					</div>
+				</div>
+				<div class="col gy-5 cell">
+					<div class="border m-2 p-2 h-100">
+						<div class="text-center contact_us_holder">
+							<p class="h4">Contact Us Form</p>
+							<p>Journalists, Recoveries, Fans, fill out the form and you will be contacted for collaboration</p>
+							<p>Share your contact details and leave a message</p>
+							<p>We'll get back to you soon</p>
+							<p>(Or maybe not, depending on who you are)</p>
+							<button type="button" class="btn btn-secondary" id="contact_us">Contact Us</button>
+						</div>
+						<form id="contact_us_form" class="d-none">
+							<div class="form-group m-2">
+								<p class="">Good afternoon, welcome to the website of the organization Rhysida. If you have come here, you would like to contact us, please fill out the form and you will be contacted shortly.</p>
+							</div>
+							<div class="form-group m-2">
+								<label for="contact_us_comment" class="form-label">Please enter a comment if you have something to say</label>
+								<textarea class="form-control" id="contact_us_comment" name="contact_us_comment" placeholder="Comment"></textarea>
+							</div>
+							<div class="form-group m-2">
+								<label for="contact_us_comment" class="form-label">Stay Informed, Share Email</label>
+								<input type="email" class="form-control" id="contact_us_email" name="contact_us_email" placeholder="Enter your email" />
+							</div>
+							<div class="form-group m-2">
+								<div id="captcha_holder"></div>
+								<input type="text" class="form-control" id="contact_us_captcha" name="contact_us_captcha" placeholder="Captcha" />
+							</div>
+							<div class="form-group m-2">
+								<button type="button" class="btn btn-secondary" id="contact_us_send">Send</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row gx-5">
+				<div class="col-3"></div>
+				<div class="col gy-5 cell">
+					<div class="border m-2 p-2 h-100">
+						<p class="text-center h4">How you can buy BTC</p>
+						<div class="row m-2">
+							<div class="col-4 text-center">
+								<img src="/images/coin1.jpeg" width="100" class="d-inline-block align-top rounded m-2" alt="logo" />
+							</div>
+							<div class="col-8">
+								<div class="m-2 h4"><a href="https://www.coinbase.com/how-to-buy/bitcoin" target="_blank">CoinBase</a></div>
+								<div class="m-2">Buy btc in 15 minutes,<br />easy and safe</div>
+							</div>
+						</div>
+						<div class="row m-2">
+							<div class="col-4 text-center">
+								<img src="/images/Bin.png" width="100" class="d-inline-block align-top rounded m-2" alt="logo" />
+							</div>
+							<div class="col-8">
+								<div class="m-2 h4"><a href="https://www.binance.com/en/how-to-buy/bitcoin" target="_blank">Binance</a></div>
+								<div class="m-2">Buy btc via debit card or<br />bank account fast and safe</div>
+							</div>
+						</div>
+						<p class="text-center h4">1 BTC = <span id="btc_usd_price">??????</span> USD</p>
+					</div>
+				</div>
+				<div class="col-3"></div>
+			</div>
+			<div class="row gx-5">
+				<div class="col gy-5 cell text-center">
+					<p>Our Mirror: <a href="http://rhysidafc6lm7qa2mkiukbezh7zuth3i4wof4mh2audkymscjm6yegad.onion/" target="_blank">http://rhysidafc6lm7qa2mkiukbezh7zuth3i4wof4mh2audkymscjm6yegad.onion/</a></p>
+				</div>
+			</div>
+			<div class="row gx-5">
+				<div class="col gy-5 cell text-center mb-5">
+					<p>Troublesome situation? Reach out via email, we'll handle it</p>
+					<p><a href="mailto:rhysida@onionmail.org">rhysida@onionmail.org</a></p>
+					<p><a href="mailto:rhysidacrypting@onionmail.org">rhysidacrypting@onionmail.org</a></p>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="token_incorrect_modal" tabindex="-1" role="dialog" aria-labelledby="token_incorrect_modal_label">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="token_incorrect_modal_label">Incorrect Token</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">Please specify correct one</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="success_modal" tabindex="-1" role="dialog" aria-labelledby="success_modal_label">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="success_modal_label">Your message has been sent</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">Thank you for your cooperation</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="error_modal" tabindex="-1" role="dialog" aria-labelledby="error_modal_label">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="error_modal_label">An error has occurred</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<p>Send us email, we'll handle it</p>
+						<p><a href="mailto:rhysida@onionmail.org">rhysida@onionmail.org</a></p>
+						<p><a href="mailto:rhysidacrypting@onionmail.org">rhysidacrypting@onionmail.org</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="archive_modal" tabindex="-1" role="dialog" aria-labelledby="archive_modal_label" data-loaded="0">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="archive_modal_label">Archive</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body"></div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="auction_modal" tabindex="-1" role="dialog" aria-labelledby="auction_modal_label" data-loaded="0">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="auction_modal_label">Auctions</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body"></div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="news_modal" tabindex="-1" role="dialog" aria-labelledby="news_modal_label" data-loaded="0">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="news_modal_label">News</h4>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body"></div>
+				</div>
+			</div>
+		</div>
+		<div id="loading" class="position-fixed top-0 start-0 w-100 h-100 text-center d-none" style="z-index: 1100; background-color: rgba(69, 75, 79, 0.75) !important;">
+			<div role="status" class="spinner-border position-relative" style="width: 6rem; height: 6rem; top: 50%; margin-top: -3rem;">
+				<span class="visually-hidden">Loading...</span>
+			</div>
+		</div>
+		<script type="text/javascript">
+			async function lastCompany() {
+				const response = await fetch( "/archive.php?last" );
+				const text = await response.text();
+				$( "#last_company" ).replaceWith( $( text ) );
+				$( "#last_company button[data-company]" ).click( getCompany );
+				new Viewer( document.getElementById( "last_company" ) );
+			}
+			async function penultimateCompany() {
+				const response = await fetch( "/archive.php?last&penultimate" );
+				const text = await response.text();
+				$( "#penultimate_company" ).replaceWith( $( text ) );
+				$( "#archive_button" ).click( showArchive );
+				$( "#penultimate_company button[data-company]" ).click( getCompany );
+				new Viewer( document.getElementById( "penultimate_company" ) );
+			}
+			async function lastAuction() {
+				const response = await fetch( "/archive.php?last&auction" );
+				const text = await response.text();
+				$( "#last_auction" ).replaceWith( $( text ) );
+				$( "#auctions_carousel .auction_button" ).click( showArchiveAuction );
+				let carousel_items = document.querySelectorAll( "#auctions_carousel .carousel-item" );
+				for ( let i = carousel_items.length - 1; i >= 0; i-- ) {
+					new Viewer( carousel_items[ i ] );
+				}
+				let auction_captcha_holders = document.querySelectorAll( "#last_auction .auction_captcha_holder" );
+				for ( let i = auction_captcha_holders.length - 1; i >= 0; i-- ) {
+					fetch( "get_captcha.php" ).then( res => res.text() ).then( txt => auction_captcha_holders[ i ].innerHTML = txt );
+					$( "#last_auction .auction_send" ).click( function() { auctionSend( this ); } );
+				}
+				new bootstrap.Carousel( document.getElementById( "auctions_carousel" ), {
+					interval: 30000,
+					ride: "carousel"
+				} );
+			}
+			function auctionSend( sb ) {
+				let comment = $( $( sb ).closest( "form" ) ).find( "[name=auction_comment]" )[ 0 ];
+				
+				if(
+					comment.value.toLowerCase().match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))[\s\.\,\r\n\t\-]/ ) ||
+					comment.value.toLowerCase().match( /\s(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))[\s\.\,\r\n\t\-]/ ) ||
+					comment.value.toLowerCase().match( /\s(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ) 
+				) {
+					if ( $( sb ).closest( ".modal" ).length > 0 ) {
+						bootstrap.Modal.getOrCreateInstance( $( sb ).closest( ".modal" )[ 0 ] ).hide();
+					}
+					$( "#loading" ).removeClass( "d-none" );
+					$.post( "form.php", $( sb ).closest( "form" ).serialize(), function( data ) {
+						$( "#loading" ).addClass( "d-none" );
+						
+						if ( parseInt( data, 10 ) == 1 ) {
+							bootstrap.Modal.getOrCreateInstance( document.getElementById( "success_modal" ) ).show();
+						} else {
+							bootstrap.Modal.getOrCreateInstance( document.getElementById( "error_modal" ) ).show();
+						}
+					} );
+				} else {
+					comment.classList.add( "error" );
+					setTimeout( function() {
+						let t = document.getElementsByClassName( "error" )[ 0 ];
+						if ( t != window.undefined ) {
+							t.classList.remove( "error" );
+						}
+					}, 2000 );
+				}
+			}
+			async function lastNews() {
+				const response = await fetch( "/news.php?last" );
+				const text = await response.text();
+				$( "#last_news" ).replaceWith( $( text ) );
+				$( "#news_button" ).click( showNews );
+			}
+			async function showArchive() {
+				if ( parseInt( $( "#archive_modal" ).data( "loaded" ), 10 ) == 0 ) {
+					$( "#loading" ).removeClass( "d-none" );
+					const response = await fetch( "/archive.php" );
+					const text = await response.text();
+					$( "#archive_modal .modal-body" ).empty().append( $( text ) );
+					$( "#archive_modal" ).data( "loaded", 1 );
+					$( "#loading" ).addClass( "d-none" );
+					$( "#archive_modal button[data-company]" ).click( getCompany );
+				}
+				bootstrap.Modal.getOrCreateInstance( document.getElementById( "archive_modal" ) ).show();
+			}
+			async function showArchiveAuction() {
+				if ( parseInt( $( "#auction_modal" ).data( "loaded" ), 10 ) == 0 ) {
+					$( "#loading" ).removeClass( "d-none" );
+					const response = await fetch( "/archive.php?auction" );
+					const text = await response.text();
+					$( "#auction_modal .modal-body" ).empty().append( $( text ) );
+					$( "#auction_modal" ).data( "loaded", 1 );
+					$( "#loading" ).addClass( "d-none" );
+					$( "#auction_modal button[data-company]" ).click( getAuction );
+				}
+				bootstrap.Modal.getOrCreateInstance( document.getElementById( "auction_modal" ) ).show();
+			}
+			async function showNews() {
+				if ( parseInt( $( "#news_modal" ).data( "loaded" ), 10 ) == 0 ) {
+					$( "#loading" ).removeClass( "d-none" );
+					const response = await fetch( "/news.php" );
+					const text = await response.text();
+					$( "#news_modal .modal-body" ).empty().append( $( text ) );
+					$( "#news_modal" ).data( "loaded", 1 );
+					$( "#loading" ).addClass( "d-none" );
+				}
+				bootstrap.Modal.getOrCreateInstance( document.getElementById( "news_modal" ) ).show();
+			}
+			async function getCompany() {
+				bootstrap.Modal.getOrCreateInstance( document.getElementById( "archive_modal" ) ).hide();
+				let company = parseInt( $( this ).data( "company" ), 10 );
+				if ( $( "#company_modal_" + company ).length == 0 ) {
+					$( "#loading" ).removeClass( "d-none" );
+					const response = await fetch( "/archive.php?company=" + company );
+					const text = await response.text();
+					$( document.body ).append( $( text ) );
+					$( "#loading" ).addClass( "d-none" );
+					new Viewer( document.getElementById( "company_modal_" + company ) );
+					let auction_captcha_holder = document.querySelector( "#company_modal_" + company + " .auction_captcha_holder" );
+					if ( auction_captcha_holder != null ) {
+						fetch( "get_captcha.php" ).then( res => res.text() ).then( txt => auction_captcha_holder.innerHTML = txt );
+						$( "#company_modal_" + company + " .auction_send" ).click( function() { auctionSend( this ); } );
+					}
+					document.getElementById( "company_modal_" + company ).addEventListener( "hide.bs.modal", showArchive );
+				}
+				bootstrap.Modal.getOrCreateInstance( document.getElementById( "company_modal_" + company ) ).show();
+			}
+			async function getAuction() {
+				bootstrap.Modal.getOrCreateInstance( document.getElementById( "auction_modal" ) ).hide();
+				let company = parseInt( $( this ).data( "company" ), 10 );
+				if ( $( "#company_modal_" + company ).length == 0 ) {
+					$( "#loading" ).removeClass( "d-none" );
+					const response = await fetch( "/archive.php?company=" + company );
+					const text = await response.text();
+					$( document.body ).append( $( text ) );
+					$( "#loading" ).addClass( "d-none" );
+					new Viewer( document.getElementById( "company_modal_" + company ) );
+					let auction_captcha_holder = document.querySelector( "#company_modal_" + company + " .auction_captcha_holder" );
+					if ( auction_captcha_holder != null ) {
+						fetch( "get_captcha.php" ).then( res => res.text() ).then( txt => auction_captcha_holder.innerHTML = txt );
+						$( "#company_modal_" + company + " .auction_send" ).click( function() { auctionSend( this ); } );
+					}
+					document.getElementById( "company_modal_" + company ).addEventListener( "hide.bs.modal", showArchiveAuction );
+				}
+				bootstrap.Modal.getOrCreateInstance( document.getElementById( "company_modal_" + company ) ).show();
+			}
+			async function checkToken( inp ) {
+				const response = await fetch( "/check_token.php?token=" + document.getElementById( "token_check" ).value );
+				const text = await response.text();
+				let is_valid = ( parseInt( text, 10 ) == 1 );
+				if ( is_valid ) {
+					$( "input#token_token" ).val( inp.val() );
+					inp.val( "" );
+					inp.closest( ".token_check_holder" ).animate( { opacity: "0", height: "0" }, 500, function() {
+						let h = $( this );
+						h.css( "opacity", "1" );
+						h.css( "height", "auto" );
+						h.addClass( "d-none" );
+					} );
+					
+					let f = inp.closest( ".cell" ).find( "form" );
+					f.css( "opacity", "0" );
+					f.css( "height", "auto" );
+					f.removeClass( "d-none" );
+					f.animate( { opacity: "1" }, 500 );
+				} else {
+					bootstrap.Modal.getOrCreateInstance( document.getElementById( "token_incorrect_modal" ) ).show();
+				}
+			}
+			async function getBTCPrice() {
+				// const response = await fetch( "https://api.alternative.me/v2/ticker/bitcoin/?convert=USD" );
+				// const result = await response.json();
+				// $( "#btc_usd_price" ).text( result.data[ 1 ].quotes.USD.price );
+				const response = await fetch( "https://blockchain.info/ticker" );
+				const result = await response.json();
+				$( "#btc_usd_price" ).text( result.USD.last.toFixed(0) );
+			};
+			$( function() {
+				$( document ).on( "focusin", "input#token_check", function() {
+					if ( window.innerWidth >= 768 ) {
+						$( this ).closest( ".cell" ).animate( { flexBasis: "100%" }, 500 );
+					}
+				} );
+				$( document ).on( "focusout", "input#token_check", function() {
+					if ( window.innerWidth >= 768 ) {
+						if ( $( this ).is( ":visible" ) ) {
+							$( this ).closest( ".cell" ).animate( { flexBasis: "50%" }, 500 );
+						}
+					}
+				} );
+				$( document ).on( "keyup", "input#token_check", function( e ) {
+					let k = e.key;
+					if( k === "Enter" ) {
+						e.preventDefault();
+						checkToken( $( this ) );
+					}
+				} );
+				$( document ).on( "click", "button#token_send", function( e ) {
+					e.preventDefault();
+					
+					let email = document.getElementById( "token_email" );
+					
+					if ( email.value.toLowerCase().match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ) ) {
+						let h = $( this ).closest( ".cell" ).find( ".token_check_holder" );
+						h.css( "opacity", "0" );
+						h.removeClass( "d-none" );
+						h.animate( { opacity: "1" }, 500 );
+						
+						$( "input#token_check" ).trigger( "focusout" );
+						
+						$( this ).closest( "form" ).animate( { opacity: "0", height: "0" }, 500, function() {
+							let f = $( this );
+							f.css( "opacity", "1" );
+							f.css( "height", "auto" );
+							f.addClass( "d-none" );
+						} );
+						
+						$( "#loading" ).removeClass( "d-none" );
+						$.post( "form.php", $( "form#token_form" ).serialize(), function( data ) {
+							$( "#loading" ).addClass( "d-none" );
+							if ( parseInt( data, 10 ) == 1 ) {
+								bootstrap.Modal.getOrCreateInstance( document.getElementById( "success_modal" ) ).show();
+							} else {
+								bootstrap.Modal.getOrCreateInstance( document.getElementById( "error_modal" ) ).show();
+							}
+						} );
+					} else {
+						email.classList.add( "error" );
+						setTimeout( function() {
+							document.getElementById( "token_email" ).classList.remove( "error" );
+						}, 2000 );
+					}
+				} );
+				$( document ).on( "click", "button#contact_us_send", function( e ) {
+					e.preventDefault();
+					
+					let email = document.getElementById( "contact_us_email" );
+					
+					if ( email.value.toLowerCase().match( /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ ) ) {
+						let h = $( this ).closest( ".cell" ).find( ".contact_us_holder" );
+						h.css( "opacity", "0" );
+						h.removeClass( "d-none" );
+						h.animate( { opacity: "1" }, 500 );
+						
+						$( this ).closest( "form" ).animate( { opacity: "0", height: "0" }, 500, function() {
+							let f = $( this );
+							f.css( "opacity", "1" );
+							f.css( "height", "auto" );
+							f.addClass( "d-none" );
+						} );
+						
+						if ( window.innerWidth >= 768 ) {
+							if ( $( this ).is( ":visible" ) ) {
+								$( this ).closest( ".cell" ).animate( { flexBasis: "0%" }, 500 );
+							}
+						}
+						
+						$( "#loading" ).removeClass( "d-none" );
+						$.post( "form.php", $( "form#contact_us_form" ).serialize(), function( data ) {
+							$( "#loading" ).addClass( "d-none" );
+							if ( parseInt( data, 10 ) == 1 ) {
+								bootstrap.Modal.getOrCreateInstance( document.getElementById( "success_modal" ) ).show();
+							} else {
+								bootstrap.Modal.getOrCreateInstance( document.getElementById( "error_modal" ) ).show();
+							}
+						} );
+					} else {
+						email.classList.add( "error" );
+						setTimeout( function() {
+							document.getElementById( "contact_us_email" ).classList.remove( "error" );
+						}, 2000 );
+					}
+				} );
+				$( document ).on( "click", "button#contact_us", function( e ) {
+					$( this ).closest( ".contact_us_holder" ).animate( { opacity: "0", height: "0" }, 500, function() {
+						let h = $( this );
+						h.css( "opacity", "1" );
+						h.css( "height", "auto" );
+						h.addClass( "d-none" );
+					} );
+					
+					let f = $( this ).closest( ".cell" ).find( "form" );
+					f.css( "opacity", "0" );
+					f.css( "height", "auto" );
+					f.removeClass( "d-none" );
+					f.animate( { opacity: "1" }, 500 );
+					
+					if ( window.innerWidth >= 768 ) {
+						$( this ).closest( ".cell" ).animate( { flexBasis: "30%" }, 500 );
+					}
+					
+					fetch( "get_captcha.php" ).then( res => res.text() ).then( txt => document.getElementById( "captcha_holder" ).innerHTML = txt );
+				} );
+				$( document ).on( "click", "p#auctions_online", function( e ) {
+					showArchiveAuction();
+				} );
+				$( document ).on( "click", "p#companies_online", function( e ) {
+					showArchive();
+				} );
+				setInterval( function() {
+					$( ".timer" ).each( function() {
+						let d = $( this );
+						let t = parseInt( d.data( "time" ), 10 );
+						let s = parseInt( d.data( "stopped" ), 10 );
+						if ( s == 2 ) {
+							d.text( "Stopped" );
+						} else if ( s == 1 ) {
+							let _s = parseInt( d.data( "stopped_date" ), 10 );
+							let _t = t - _s;
+							let days = Math.floor( _t / ( 24 * 60 * 60 * 1000 ) );
+							_t -= days * ( 24 * 60 * 60 * 1000 );
+							let hours = Math.floor( _t / ( 60 * 60 * 1000 ) );
+							_t -= hours * ( 60 * 60 * 1000 );
+							let minutes = Math.floor( _t / ( 60 * 1000 ) );
+							_t -= minutes * ( 60 * 1000 );
+							let seconds = Math.floor( _t / ( 1000 ) );
+							_t -= seconds * ( 1000 );
+							d.text( ( days > 0 ? days + " day" + ( days > 1 ? "s" : "" ) + " " : "" ) + ( ( hours < 10 ? "0" : "" ) + hours + ":" ) + ( ( minutes < 10 ? "0" : "" ) + minutes + ":" ) + ( ( seconds < 10 ? "0" : "" ) + seconds ) );
+						} else {
+							if ( t > 0 ) {
+								let _t = t;
+								let days = Math.floor( _t / ( 24 * 60 * 60 * 1000 ) );
+								_t -= days * ( 24 * 60 * 60 * 1000 );
+								let hours = Math.floor( _t / ( 60 * 60 * 1000 ) );
+								_t -= hours * ( 60 * 60 * 1000 );
+								let minutes = Math.floor( _t / ( 60 * 1000 ) );
+								_t -= minutes * ( 60 * 1000 );
+								let seconds = Math.floor( _t / ( 1000 ) );
+								_t -= seconds * ( 1000 );
+								d.data( "time", t - ( 1 * 1000 ) );
+								d.text( ( days > 0 ? days + " day" + ( days > 1 ? "s" : "" ) + " " : "" ) + ( ( hours < 10 ? "0" : "" ) + hours + ":" ) + ( ( minutes < 10 ? "0" : "" ) + minutes + ":" ) + ( ( seconds < 10 ? "0" : "" ) + seconds ) );
+							} else {
+								d.text( "Ended" );
+							}
+						}
+					} );
+				}, 1000 );
+				lastCompany();
+				penultimateCompany();
+				lastAuction();
+				lastNews();
+				getBTCPrice();
+			} );
+		</script>
+	</body>
+</html>

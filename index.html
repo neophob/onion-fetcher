@@ -1,1 +1,162 @@
-Placeholder for GitHub Pages
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Image Gallery</title>
+      <style>
+        body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+        }
+        .gallery {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 10px;
+          padding: 20px;
+        }
+        .image-container {
+          position: relative;
+          overflow: hidden;
+        }
+        .image {
+          width: 100%;
+          height: auto;
+          max-height: 500px;
+          object-fit: none;
+          object-position: top;
+          cursor: pointer;
+          transition: transform 0.3s ease;
+        }
+        .image:hover {
+          transform: scale(1.03);
+        }
+        .caption {
+          text-align: center;
+          font-size: 14px;
+          color: #555;
+          margin-top: 5px;
+        }
+        .image-fullscreen {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.8);
+          justify-content: center;
+          align-items: flex-start;
+          z-index: 1000;
+          overflow: auto;
+        }
+        .image-fullscreen img {
+          width: auto;
+          max-width: 100%;
+          height: auto;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="gallery">
+  
+      <div class="image-container">
+        <img src="abyss-3ev4metjirohtdpshsqlkrqcmxq6zu3d7obrdhglpy5jpbr7whmlfgqd.onion.png" alt="abyss-3ev4metjirohtdpshsqlkrqcmxq6zu3d7obrdhglpy5jpbr7whmlfgqd.onion.png" class="image">
+        <div class="caption"><b>abyss</b>: 3ev4metjirohtdpshsqlkrqcmxq6zu3d7obrdhglpy5jpbr7whmlfgqd.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="blacksuit-weg7sdx54bevnvulapqu6bpzwztryeflq3s23tegbmnhkbpqz637f2yd.onion.png" alt="blacksuit-weg7sdx54bevnvulapqu6bpzwztryeflq3s23tegbmnhkbpqz637f2yd.onion.png" class="image">
+        <div class="caption"><b>blacksuit</b>: weg7sdx54bevnvulapqu6bpzwztryeflq3s23tegbmnhkbpqz637f2yd.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="cactus-cactusbloguuodvqjmnzlwetjlpj6aggc6iocwhuupb47laukux7ckid.onion.png" alt="cactus-cactusbloguuodvqjmnzlwetjlpj6aggc6iocwhuupb47laukux7ckid.onion.png" class="image">
+        <div class="caption"><b>cactus</b>: cactusbloguuodvqjmnzlwetjlpj6aggc6iocwhuupb47laukux7ckid.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="ciphbit-ciphbitqyg26jor7eeo6xieyq7reouctefrompp6ogvhqjba7uo4xdid.onion.png" alt="ciphbit-ciphbitqyg26jor7eeo6xieyq7reouctefrompp6ogvhqjba7uo4xdid.onion.png" class="image">
+        <div class="caption"><b>ciphbit</b>: ciphbitqyg26jor7eeo6xieyq7reouctefrompp6ogvhqjba7uo4xdid.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="everest-ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion.png" alt="everest-ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion.png" class="image">
+        <div class="caption"><b>everest</b>: ransomocmou6mnbquqz44ewosbkjk3o5qjsl3orawojexfook2j7esad.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="hunters-hunters55rdxciehoqzwv7vgyv6nt37tbwax2reroyzxhou7my5ejyid.onioncompanies1413615849.png" alt="hunters-hunters55rdxciehoqzwv7vgyv6nt37tbwax2reroyzxhou7my5ejyid.onioncompanies1413615849.png" class="image">
+        <div class="caption"><b>hunters</b>: hunters55rdxciehoqzwv7vgyv6nt37tbwax2reroyzxhou7my5ejyid.onioncompanies1413615849</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="lockbit3-lockbit7z2jwcskxpbokpemdxmltipntwlkmidcll2qirbu7ykg46eyd.onion.png" alt="lockbit3-lockbit7z2jwcskxpbokpemdxmltipntwlkmidcll2qirbu7ykg46eyd.onion.png" class="image">
+        <div class="caption"><b>lockbit3</b>: lockbit7z2jwcskxpbokpemdxmltipntwlkmidcll2qirbu7ykg46eyd.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="moneymessage-blogvl7tjyjvsfthobttze52w36wwiz34hrfcmorgvdzb6hikucb7aqd.onion.png" alt="moneymessage-blogvl7tjyjvsfthobttze52w36wwiz34hrfcmorgvdzb6hikucb7aqd.onion.png" class="image">
+        <div class="caption"><b>moneymessage</b>: blogvl7tjyjvsfthobttze52w36wwiz34hrfcmorgvdzb6hikucb7aqd.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="monti-mblogci3rudehaagbryjznltdp33ojwzkq6hn2pckvjq33rycmzczpid.onion.png" alt="monti-mblogci3rudehaagbryjznltdp33ojwzkq6hn2pckvjq33rycmzczpid.onion.png" class="image">
+        <div class="caption"><b>monti</b>: mblogci3rudehaagbryjznltdp33ojwzkq6hn2pckvjq33rycmzczpid.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="play-k7kg3jqxang3wh7hnmaiokchk7qoebupfgoik6rha6mjpzwupwtj25yd.onion.png" alt="play-k7kg3jqxang3wh7hnmaiokchk7qoebupfgoik6rha6mjpzwupwtj25yd.onion.png" class="image">
+        <div class="caption"><b>play</b>: k7kg3jqxang3wh7hnmaiokchk7qoebupfgoik6rha6mjpzwupwtj25yd.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="ransomhouse-zohlm7ahjwegcedoz7lrdrti7bvpofymcayotp744qhx6gjmxbuo2yid.onion.png" alt="ransomhouse-zohlm7ahjwegcedoz7lrdrti7bvpofymcayotp744qhx6gjmxbuo2yid.onion.png" class="image">
+        <div class="caption"><b>ransomhouse</b>: zohlm7ahjwegcedoz7lrdrti7bvpofymcayotp744qhx6gjmxbuo2yid.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="ransomwareblog-z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion.png" alt="ransomwareblog-z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion.png" class="image">
+        <div class="caption"><b>ransomwareblog</b>: z6wkgghtoawog5noty5nxulmmt2zs7c3yvwr22v4czbffdoly2kl4uad.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="rhysida-rhysidafc6lm7qa2mkiukbezh7zuth3i4wof4mh2audkymscjm6yegad.onion.png" alt="rhysida-rhysidafc6lm7qa2mkiukbezh7zuth3i4wof4mh2audkymscjm6yegad.onion.png" class="image">
+        <div class="caption"><b>rhysida</b>: rhysidafc6lm7qa2mkiukbezh7zuth3i4wof4mh2audkymscjm6yegad.onion</div>
+      </div>
+    
+      <div class="image-container">
+        <img src="slug-threeamkelxicjsaf2czjyz2lc4q3ngqkxhhlexyfcp2o6raw4rphyad.onion.png" alt="slug-threeamkelxicjsaf2czjyz2lc4q3ngqkxhhlexyfcp2o6raw4rphyad.onion.png" class="image">
+        <div class="caption"><b>slug</b>: threeamkelxicjsaf2czjyz2lc4q3ngqkxhhlexyfcp2o6raw4rphyad.onion</div>
+      </div>
+    
+      </div>
+      <div class="image-fullscreen" id="fullscreenModal">
+        <img src="" alt="Fullscreen Image" id="fullscreenImage">
+      </div>
+      <script>
+        const images = document.querySelectorAll('.image');
+        const fullscreenModal = document.getElementById('fullscreenModal');
+        const fullscreenImage = document.getElementById('fullscreenImage');
+
+        // Click on image to open in fullscreen
+        images.forEach(img => {
+          img.addEventListener('click', (e) => {
+            const src = e.target.src;
+            fullscreenImage.src = src;
+            fullscreenModal.style.display = 'flex';
+          });
+        });
+
+        // Close fullscreen view when clicking outside the image
+        fullscreenModal.addEventListener('click', (e) => {
+          if (e.target === fullscreenModal) {
+            fullscreenModal.style.display = 'none';
+          }
+        });
+      </script>
+    </body>
+    </html>
+  
