@@ -80,6 +80,7 @@ const fetchOnion = async (url, outputDir, _group) => {
     await browser.close();
   } catch (error) {
     console.error(`Error fetching ${url}:`, error.message);
+    console.error(error.stack);
   }
 };
 
