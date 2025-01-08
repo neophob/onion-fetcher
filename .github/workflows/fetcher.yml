@@ -44,6 +44,8 @@ jobs:
           node /app/fetch.js https://cactusbloguuodvqjmnzlwetjlpj6aggc6iocwhuupb47laukux7ckid.onion/ /output 'Cactus' && \
           node /app/fetch.js http://weg7sdx54bevnvulapqu6bpzwztryeflq3s23tegbmnhkbpqz637f2yd.onion/ /output 'BlackSuit' && \
           node /app/fetch.js http://3ev4metjirohtdpshsqlkrqcmxq6zu3d7obrdhglpy5jpbr7whmlfgqd.onion/ /output 'Abyss' && \
+          node /app/fetch.js http://stniiomyjliimcgkvdszvgen3eaaoz55hreqqx6o77yvmpwt7gklffqd.onion/ /output 'Blackpasta' && \
+
           node /app/generate-index.js /output && \
           ls -al /output/"
 
