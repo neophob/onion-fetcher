@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+  schedule:
+    - cron: '0 6 * * *'  # Dies führt den Job täglich um 6:00 UTC aus
 
 jobs:
   onion-request:
