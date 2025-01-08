@@ -9,6 +9,8 @@ jobs:
   onion-request:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: write  # This ensures the workflow can push to the repository
 
     steps:
     - name: Checkout Repository
