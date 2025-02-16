@@ -52,7 +52,7 @@ jobs:
           ls -al /output/"
 
     - name: Upload Onion Outputs as Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: onion-outputs
         path: ./output/**
