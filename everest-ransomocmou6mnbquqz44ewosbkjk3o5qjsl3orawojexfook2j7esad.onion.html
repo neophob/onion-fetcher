@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Everest Group Has Moved</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            margin: 0;
+            overflow: hidden;
+            background: #050810;
+        }
+
+        body {
+            color: #dce8f8;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        #intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background: #050810;
+        }
+
+        #glyph-rain,
+        #rays {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+
+        #rays {
+            filter: blur(5px);
+        }
+
+        .stage {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            width: min(860px, calc(100vw - 32px));
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            text-align: center;
+            transform: translateY(-1.5vh);
+        }
+
+        .gd-logo {
+            width: clamp(138px, 12vw, 188px);
+            height: clamp(138px, 12vw, 188px);
+            opacity: 0;
+            filter: blur(16px);
+            transform: scale(0.86);
+            animation: logoDecrypt 1.4s cubic-bezier(0.4, 0, 0.2, 1) 0.9s forwards;
+            will-change: opacity, transform, filter;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        @keyframes logoDecrypt {
+            to {
+                opacity: 1;
+                filter: blur(0px) drop-shadow(0 8px 42px rgba(82,134,255,0.55));
+                transform: scale(1);
+            }
+        }
+
+        .gd-line {
+            width: min(360px, 52vw);
+            height: 1px;
+            transform: scaleX(0);
+            transform-origin: center;
+            background: linear-gradient(90deg, transparent, rgba(82,134,255,0.6) 50%, transparent);
+            box-shadow: 0 0 8px rgba(82,134,255,0.4);
+            animation: lineDecrypt 1.1s cubic-bezier(0.4, 0, 0.2, 1) 1.7s forwards;
+        }
+
+        @keyframes lineDecrypt {
+            to { transform: scaleX(1); }
+        }
+
+        .gd-title {
+            margin: 0;
+            padding-left: 0.3em;
+            color: #dce8f8;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: clamp(1.15rem, 3.6vw, 2.2rem);
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            line-height: 1.1;
+            opacity: 0;
+            transform: translateY(8px);
+            animation: titleIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        @keyframes titleIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .move-panel {
+            width: min(820px, 100%);
+            margin-top: 2px;
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(16px);
+            animation: movePanelIn 0.95s cubic-bezier(0.4, 0, 0.2, 1) 4.15s forwards;
+        }
+
+        @keyframes movePanelIn {
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        .domain-shell {
+            appearance: none;
+            position: relative;
+            width: min(780px, 100%);
+            margin: 2px auto 0;
+            padding: 16px 18px 17px;
+            overflow: hidden;
+            border-right: 0;
+            border-left: 0;
+            border-top: 1px solid rgba(162,196,240,0.24);
+            border-bottom: 1px solid rgba(82,134,255,0.32);
+            background:
+                radial-gradient(70% 160% at 50% 100%, rgba(82,134,255,0.18), transparent 68%),
+                linear-gradient(90deg, transparent, rgba(82,134,255,0.08) 22%, rgba(56,189,248,0.08) 50%, rgba(82,134,255,0.08) 78%, transparent);
+            box-shadow:
+                0 0 42px rgba(82,134,255,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.04),
+                inset 0 -1px 0 rgba(82,134,255,0.13);
+            color: inherit;
+            cursor: pointer;
+            font: inherit;
+            opacity: 0;
+            filter: blur(8px);
+            text-align: center;
+            transform: translateY(12px);
+            transition: border-color 180ms ease, box-shadow 180ms ease;
+            animation: domainIn 0.9s cubic-bezier(0.4, 0, 0.2, 1) 4.45s forwards;
+        }
+
+        .domain-shell::before,
+        .domain-shell::after {
+            content: "";
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .domain-shell::before {
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(205,232,255,0.16), transparent);
+            opacity: 0.7;
+        }
+
+        .domain-shell::after {
+            top: 0;
+            bottom: 0;
+            width: 26%;
+            left: -36%;
+            background: linear-gradient(105deg, transparent, rgba(220,235,255,0.16), transparent);
+            transform: skewX(-18deg);
+            animation: domainSweep 5.2s ease-in-out 3.55s infinite;
+        }
+
+        .domain-shell:hover,
+        .domain-shell:focus-visible {
+            border-top-color: rgba(205,232,255,0.38);
+            border-bottom-color: rgba(82,134,255,0.58);
+            box-shadow:
+                0 0 52px rgba(82,134,255,0.18),
+                inset 0 1px 0 rgba(255,255,255,0.07),
+                inset 0 -1px 0 rgba(82,134,255,0.18);
+            outline: none;
+        }
+
+        .domain-shell.copied {
+            border-top-color: rgba(205,232,255,0.58);
+            border-bottom-color: rgba(56,189,248,0.76);
+            box-shadow:
+                0 0 48px rgba(82,134,255,0.20),
+                inset 0 0 18px rgba(56,189,248,0.08);
+        }
+
+        .domain-shell.copied .domain-value {
+            color: #ffffff;
+            text-shadow: 0 0 24px rgba(56,189,248,0.56);
+        }
+
+        @keyframes domainIn {
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes domainSweep {
+            0%, 44% { left: -36%; opacity: 0; }
+            52% { opacity: 1; }
+            70%, 100% { left: 110%; opacity: 0; }
+        }
+
+        .domain-label {
+            position: relative;
+            z-index: 1;
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(166,203,255,0.55);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 0.22em;
+            line-height: 1;
+            text-transform: uppercase;
+        }
+
+        .domain-value {
+            position: relative;
+            z-index: 1;
+            display: block;
+            max-width: 100%;
+            color: #f5f9ff;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: clamp(0.96rem, 1.34vw, 1.12rem);
+            font-weight: 700;
+            letter-spacing: 0.065em;
+            line-height: 1.35;
+            overflow-wrap: anywhere;
+            text-shadow: 0 0 18px rgba(82,134,255,0.36);
+            transition: color 180ms ease, text-shadow 180ms ease;
+        }
+
+        .copy-feedback {
+            position: absolute;
+            top: 9px;
+            right: 14px;
+            z-index: 2;
+            color: rgba(205,232,255,0.84);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 0.58rem;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            opacity: 0;
+            text-transform: uppercase;
+            transform: translate3d(0, 5px, 0);
+            will-change: opacity, transform;
+        }
+
+        .notice-tail {
+            opacity: 0;
+            filter: blur(8px);
+            transform: translateY(12px);
+            animation: tailIn 0.85s cubic-bezier(0.4, 0, 0.2, 1) 7.55s forwards;
+        }
+
+        @keyframes tailIn {
+            to {
+                opacity: 1;
+                filter: blur(0);
+                transform: translateY(0);
+            }
+        }
+
+        .domain-part {
+            display: inline;
+        }
+
+        .domain-break {
+            display: none;
+        }
+
+        .move-kicker {
+            margin: 0 0 16px;
+            color: rgba(166, 203, 255, 0.62);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: clamp(0.74rem, 1.25vw, 0.88rem);
+            font-weight: 500;
+            letter-spacing: 0.24em;
+            line-height: 1.5;
+            text-transform: uppercase;
+        }
+
+        .move-copy {
+            max-width: 660px;
+            margin: 18px auto 0;
+            color: rgba(220,232,248,0.82);
+            font-size: clamp(1rem, 1.55vw, 1.16rem);
+            font-weight: 500;
+            line-height: 1.7;
+            letter-spacing: 0.01em;
+        }
+
+        .move-copy strong {
+            color: #f4f8ff;
+            font-weight: 650;
+        }
+
+        .move-actions {
+            display: flex;
+            justify-content: center;
+            margin-top: 28px;
+        }
+
+        .new-domain-link {
+            display: inline-flex;
+            min-width: 252px;
+            min-height: 46px;
+            align-items: center;
+            justify-content: center;
+            padding: 0 28px;
+            border: 1px solid rgba(162,196,240,0.42);
+            background:
+                linear-gradient(90deg, rgba(82,134,255,0.10), rgba(56,189,248,0.08)),
+                rgba(5,8,16,0.66);
+            box-shadow: 0 0 32px rgba(82,134,255,0.16), inset 0 0 18px rgba(82,134,255,0.08);
+            color: #f6f9ff;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+        }
+
+        .new-domain-link:hover,
+        .new-domain-link:focus-visible {
+            border-color: rgba(205,232,255,0.78);
+            background:
+                linear-gradient(90deg, rgba(82,134,255,0.16), rgba(56,189,248,0.13)),
+                rgba(5,8,16,0.72);
+            box-shadow: 0 0 42px rgba(82,134,255,0.24), inset 0 0 20px rgba(82,134,255,0.1);
+            outline: none;
+            transform: translateY(-1px);
+        }
+
+        .scanline {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background:
+                linear-gradient(rgba(255,255,255,0.025) 50%, rgba(0,0,0,0.035) 50%),
+                radial-gradient(80% 60% at 50% 42%, rgba(82,134,255,0.08), transparent 68%);
+            background-size: 100% 4px, auto;
+            opacity: 0.45;
+            mix-blend-mode: screen;
+        }
+
+        @media (max-width: 600px) {
+            .stage {
+                width: min(100vw - 28px, 390px);
+                gap: 14px;
+                transform: translateY(-1vh);
+            }
+
+            .gd-logo {
+                width: 132px;
+                height: 132px;
+            }
+
+            .gd-line {
+                width: min(300px, 72vw);
+            }
+
+            .gd-title {
+                padding-left: 0.18em;
+                font-size: clamp(1rem, 6vw, 1.36rem);
+                letter-spacing: 0.18em;
+            }
+
+            .move-panel {
+                margin-top: 8px;
+            }
+
+            .domain-shell {
+                padding: 13px 12px 14px;
+            }
+
+            .copy-feedback {
+                top: 7px;
+                right: 10px;
+                font-size: 0.52rem;
+            }
+
+            .domain-label {
+                margin-bottom: 7px;
+                font-size: 0.58rem;
+                letter-spacing: 0.18em;
+            }
+
+            .domain-value {
+                font-size: clamp(0.75rem, 2.9vw, 0.96rem);
+                letter-spacing: 0.02em;
+                line-height: 1.45;
+            }
+
+            .domain-break {
+                display: block;
+            }
+
+            .move-kicker {
+                margin-bottom: 12px;
+                font-size: 0.72rem;
+                letter-spacing: 0.16em;
+            }
+
+            .move-copy {
+                font-size: 0.95rem;
+                line-height: 1.58;
+                margin-top: 15px;
+            }
+
+            .move-actions {
+                margin-top: 22px;
+            }
+
+            .new-domain-link {
+                width: min(100%, 320px);
+                min-height: 44px;
+                font-size: 0.68rem;
+                letter-spacing: 0.16em;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .gd-logo {
+                width: 112px;
+                height: 112px;
+            }
+
+            .gd-title {
+                letter-spacing: 0.12em;
+            }
+
+            .move-copy {
+                font-size: 0.9rem;
+            }
+
+            .domain-value {
+                font-size: 0.71rem;
+                letter-spacing: 0.01em;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 1ms !important;
+                animation-delay: 0ms !important;
+                transition-duration: 1ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            #glyph-rain,
+            #rays {
+                display: none;
+            }
+
+            .gd-logo,
+            .gd-title,
+            .move-panel {
+                opacity: 1;
+                filter: none;
+                transform: none;
+            }
+
+            .gd-line {
+                transform: scaleX(1);
+            }
+
+            .domain-shell {
+                opacity: 1;
+                filter: none;
+                transform: none;
+            }
+
+            .notice-tail {
+                opacity: 1;
+                filter: none;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="intro-screen" role="dialog" aria-label="Everest Group moved">
+        <canvas id="glyph-rain" aria-hidden="true"></canvas>
+        <canvas id="rays" aria-hidden="true"></canvas>
+        <div class="scanline" aria-hidden="true"></div>
+
+        <main class="stage">
+            <img
+                class="gd-logo"
+                src="data:image/png;base64,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"
+                alt="Everest Group"
+                width="188"
+                height="188"
+                decoding="async"
+            >
+            <div class="gd-line" aria-hidden="true"></div>
+            <h1 class="gd-title" id="decrypt-title" aria-label="EVEREST GROUP">EVEREST GROUP</h1>
+
+            <section class="move-panel" aria-label="Domain moved notice">
+                <p class="move-kicker">We moved to a new domain</p>
+                <button class="domain-shell" id="copy-domain" type="button" aria-label="Copy new domain">
+                    <span class="copy-feedback" id="copy-feedback" aria-hidden="true">Copied</span>
+                    <span class="domain-label">New address</span>
+                    <span class="domain-value" id="domain-value" aria-label="everestndkvzcibcje2cqxhre2hmmybl3rn2gwzwsblz7gx6uryn5rad.onion">
+                        <span class="domain-part" id="domain-part-a">everestndkvzcibcje2cqxhre2hmmybl3rn2g</span><span class="domain-break" aria-hidden="true"></span><span class="domain-part" id="domain-part-b">wzwsblz7gx6uryn5rad.onion</span>
+                    </span>
+                </button>
+                <div class="notice-tail">
+                    <p class="move-copy">
+                        Everest is now available on a new domain.
+                        <strong>New leaks have already been published on the new site.</strong>
+                    </p>
+                    <div class="move-actions">
+                        <a class="new-domain-link" href="http://everestndkvzcibcje2cqxhre2hmmybl3rn2gwzwsblz7gx6uryn5rad.onion" target="_blank" rel="noopener noreferrer" data-target-url="http://everestndkvzcibcje2cqxhre2hmmybl3rn2gwzwsblz7gx6uryn5rad.onion">Open new domain</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+    (function() {
+        var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var title = document.getElementById("decrypt-title");
+        var domain = document.getElementById("domain-value");
+        var domainA = document.getElementById("domain-part-a");
+        var domainB = document.getElementById("domain-part-b");
+        var copyDomain = document.getElementById("copy-domain");
+        var copyFeedback = document.getElementById("copy-feedback");
+        var FINAL = "EVEREST GROUP";
+        var NEW_DOMAIN = "everestndkvzcibcje2cqxhre2hmmybl3rn2gwzwsblz7gx6uryn5rad.onion";
+        var NEW_DOMAIN_A = "everestndkvzcibcje2cqxhre2hmmybl3rn2g";
+        var NEW_DOMAIN_B = "wzwsblz7gx6uryn5rad.onion";
+        var LEGACY_URL = "/old-site.php";
+        var TITLE_GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_\\/[]{}=+*^?#@$%&";
+        var RAIN_GLYPHS = "0123456789ABCDEF{}[]<>/\\=+*#%savEVERESTｱｲｳｴｵｶｷｸｹｺﾊﾋﾌﾍﾎﾐﾑﾒﾓ";
+
+        var rain = document.getElementById("glyph-rain");
+        var ray = document.getElementById("rays");
+        var rctx = rain.getContext("2d");
+        var yctx = ray.getContext("2d");
+        var W = 0;
+        var H = 0;
+        var cx = 0;
+        var cy = 0;
+        var FONT = 16;
+        var drops = [];
+        var rays = [];
+        var raf = 0;
+        var start = performance.now();
+        var FRAME = 1000 / 45;
+        var last = 0;
+        var copiedTimer = 0;
+
+        function fallbackCopy(text) {
+            var area = document.createElement("textarea");
+            area.value = text;
+            area.setAttribute("readonly", "");
+            area.style.position = "fixed";
+            area.style.left = "-9999px";
+            document.body.appendChild(area);
+            area.select();
+            var ok = false;
+            try {
+                ok = document.execCommand("copy");
+            } catch (error) {
+                ok = false;
+            }
+            document.body.removeChild(area);
+            return ok;
+        }
+
+        function copiedAnimation(ok) {
+            if (!copyDomain) return;
+            if (copyFeedback) copyFeedback.textContent = ok ? "Copied" : "Copy failed";
+            copyDomain.classList.add("copied");
+            window.clearTimeout(copiedTimer);
+
+            if (copyFeedback && copyFeedback.animate) {
+                copyFeedback.getAnimations().forEach(function(animation) {
+                    animation.cancel();
+                });
+                copyFeedback.style.opacity = "1";
+                copyFeedback.style.transform = "translate3d(0, 0, 0)";
+                var feedbackAnimation = copyFeedback.animate(
+                    [
+                        { opacity: 1, transform: "translate3d(0, 0, 0)" },
+                        { opacity: 1, transform: "translate3d(0, 0, 0)", offset: 0.62 },
+                        { opacity: 0, transform: "translate3d(0, -5px, 0)" },
+                    ],
+                    { duration: 1050, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
+                );
+                feedbackAnimation.onfinish = function() {
+                    copyFeedback.style.opacity = "0";
+                    copyFeedback.style.transform = "translate3d(0, -5px, 0)";
+                };
+            } else if (copyFeedback) {
+                copyFeedback.style.opacity = "1";
+                copyFeedback.style.transform = "translate3d(0, 0, 0)";
+                window.setTimeout(function() {
+                    copyFeedback.style.opacity = "0";
+                    copyFeedback.style.transform = "translate3d(0, -5px, 0)";
+                }, 1050);
+            }
+
+            if (domain && domain.animate) {
+                domain.animate(
+                    [
+                        { opacity: 1, transform: "translate3d(0, 0, 0)" },
+                        { opacity: 0.72, transform: "translate3d(0, -1px, 0)", offset: 0.38 },
+                        { opacity: 1, transform: "translate3d(0, 0, 0)" },
+                    ],
+                    { duration: 520, easing: "cubic-bezier(0.4, 0, 0.2, 1)" }
+                );
+            }
+
+            copiedTimer = window.setTimeout(function() {
+                copyDomain.classList.remove("copied");
+            }, 900);
+        }
+
+        function copyNewDomain() {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                copiedAnimation(true);
+                navigator.clipboard.writeText(NEW_DOMAIN)
+                    .catch(function() {
+                        if (!fallbackCopy(NEW_DOMAIN)) copiedAnimation(false);
+                    });
+                return;
+            }
+            copiedAnimation(fallbackCopy(NEW_DOMAIN));
+        }
+
+        if (copyDomain) copyDomain.addEventListener("click", copyNewDomain);
+
+        var newDomainLink = document.querySelector(".new-domain-link");
+        if (newDomainLink) {
+            newDomainLink.addEventListener("click", function() {
+                window.setTimeout(function() {
+                    window.location.href = LEGACY_URL;
+                }, 120);
+            });
+        }
+
+        if (reduce) {
+            if (title) title.textContent = FINAL;
+            if (domainA) domainA.textContent = NEW_DOMAIN_A;
+            if (domainB) domainB.textContent = NEW_DOMAIN_B;
+            return;
+        }
+
+        function buildRays() {
+            var NUM = 32;
+            rays = Array.from({ length: NUM }, function(_, i) {
+                return {
+                    angle: -Math.PI / 2 + (i / NUM - 0.5) * 2.3,
+                    len: W * 0.55 + Math.random() * W * 0.2,
+                    width: 12 + Math.random() * 28,
+                    speed: 0.00015 + Math.random() * 0.0002,
+                    phase: Math.random() * Math.PI * 2,
+                    alpha: 0.012 + Math.random() * 0.022,
+                };
+            });
+        }
+
+        function resize() {
+            W = rain.width = ray.width = window.innerWidth;
+            H = rain.height = ray.height = window.innerHeight;
+            cx = W / 2;
+            cy = H * 0.42;
+            var cols = Math.ceil(W / FONT);
+            drops = Array.from({ length: cols }, function() {
+                return Math.random() * -40;
+            });
+            buildRays();
+        }
+
+        function draw(ts) {
+            if (ts - last < FRAME) {
+                raf = requestAnimationFrame(draw);
+                return;
+            }
+            last = ts;
+            var elapsed = ts - start;
+            var rayGlobal = Math.min(Math.max((elapsed - 700) / 1200, 0), 1) *
+                (elapsed > 3800 ? Math.max(0, 1 - (elapsed - 3800) / 800) : 1);
+            var rainAlpha = elapsed < 1400 ? 1 : Math.max(0.32, 1 - (elapsed - 1400) / 1400);
+            var clearR = Math.min(Math.max((elapsed - 900) / 1300, 0), 1) * Math.min(W, H) * 0.36;
+
+            rctx.globalCompositeOperation = "source-over";
+            rctx.fillStyle = "rgba(4,6,12,0.18)";
+            rctx.fillRect(0, 0, W, H);
+            rctx.font = FONT + "px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace";
+            rctx.textBaseline = "top";
+            for (var i = 0; i < drops.length; i++) {
+                var x = i * FONT;
+                var y = drops[i] * FONT;
+                var ch = RAIN_GLYPHS[(Math.random() * RAIN_GLYPHS.length) | 0];
+                var head = Math.random() > 0.94;
+                rctx.fillStyle = head
+                    ? "rgba(205,232,255," + rainAlpha + ")"
+                    : "rgba(96,150,255," + (rainAlpha * 0.75) + ")";
+                rctx.fillText(ch, x, y);
+                if (y > H && Math.random() > 0.965) drops[i] = Math.random() * -20;
+                else drops[i] += 0.55;
+            }
+
+            if (clearR > 1) {
+                rctx.globalCompositeOperation = "destination-out";
+                var hole = rctx.createRadialGradient(cx, cy, 0, cx, cy, clearR);
+                hole.addColorStop(0, "rgba(0,0,0,1)");
+                hole.addColorStop(0.62, "rgba(0,0,0,0.92)");
+                hole.addColorStop(1, "rgba(0,0,0,0)");
+                rctx.fillStyle = hole;
+                rctx.beginPath();
+                rctx.arc(cx, cy, clearR, 0, Math.PI * 2);
+                rctx.fill();
+                rctx.globalCompositeOperation = "source-over";
+            }
+
+            yctx.clearRect(0, 0, W, H);
+            if (rayGlobal > 0.001) {
+                var bloom = yctx.createRadialGradient(cx, cy, 0, cx, cy, H * 0.55);
+                bloom.addColorStop(0, "rgba(120,180,255," + (0.22 * rayGlobal) + ")");
+                bloom.addColorStop(0.18, "rgba(82,134,255," + (0.1 * rayGlobal) + ")");
+                bloom.addColorStop(0.5, "rgba(40,80,180," + (0.04 * rayGlobal) + ")");
+                bloom.addColorStop(1, "rgba(6,8,16,0)");
+                yctx.beginPath();
+                yctx.fillStyle = bloom;
+                yctx.arc(cx, cy, H * 0.55, 0, Math.PI * 2);
+                yctx.fill();
+
+                for (var j = 0; j < rays.length; j++) {
+                    var r = rays[j];
+                    var wobble = Math.sin(elapsed * r.speed + r.phase) * 0.018;
+                    var flicker = 0.7 + 0.3 * Math.sin(elapsed * r.speed * 3.7 + r.phase * 2);
+                    var angle = r.angle + wobble;
+                    var a = r.alpha * flicker * rayGlobal;
+                    var x2 = cx + Math.cos(angle) * r.len;
+                    var y2 = cy + Math.sin(angle) * r.len;
+                    var g = yctx.createLinearGradient(cx, cy, x2, y2);
+                    g.addColorStop(0, "rgba(160,200,255," + (a * 7) + ")");
+                    g.addColorStop(0.08, "rgba(130,175,245," + (a * 4) + ")");
+                    g.addColorStop(0.35, "rgba(82,134,255," + (a * 1.5) + ")");
+                    g.addColorStop(1, "rgba(82,134,255,0)");
+                    yctx.beginPath();
+                    yctx.strokeStyle = g;
+                    yctx.lineWidth = r.width;
+                    yctx.lineCap = "round";
+                    yctx.moveTo(cx, cy);
+                    yctx.lineTo(x2, y2);
+                    yctx.stroke();
+                }
+
+                var core = yctx.createRadialGradient(cx, cy, 0, cx, cy, 40);
+                core.addColorStop(0, "rgba(220,235,255," + (0.55 * rayGlobal) + ")");
+                core.addColorStop(0.4, "rgba(160,200,255," + (0.2 * rayGlobal) + ")");
+                core.addColorStop(1, "rgba(82,134,255,0)");
+                yctx.beginPath();
+                yctx.fillStyle = core;
+                yctx.arc(cx, cy, 40, 0, Math.PI * 2);
+                yctx.fill();
+            }
+
+            raf = requestAnimationFrame(draw);
+        }
+
+        function scrambleText(el, text, duration) {
+            if (!el) return;
+            var chars = Array.from(text);
+            var total = chars.length;
+            var t0 = performance.now();
+            var timer = window.setInterval(function() {
+                var p = Math.min((performance.now() - t0) / duration, 1);
+                var settled = Math.floor(p * total);
+                var out = "";
+                for (var i = 0; i < total; i++) {
+                    if (chars[i] === " ") out += " ";
+                    else if (i < settled) out += chars[i];
+                    else out += TITLE_GLYPHS[(Math.random() * TITLE_GLYPHS.length) | 0];
+                }
+                el.textContent = out;
+                if (p >= 1) {
+                    el.textContent = text;
+                    window.clearInterval(timer);
+                }
+            }, 45);
+        }
+
+        resize();
+        window.addEventListener("resize", resize);
+        window.setTimeout(function() { scrambleText(title, FINAL, 1200); }, 1600);
+        window.setTimeout(function() { scrambleText(domainA, NEW_DOMAIN_A, 2800); }, 4450);
+        window.setTimeout(function() { scrambleText(domainB, NEW_DOMAIN_B, 2600); }, 4520);
+        raf = requestAnimationFrame(draw);
+
+        window.addEventListener("pagehide", function() {
+            cancelAnimationFrame(raf);
+        }, { once: true });
+    })();
+    </script>
+</body>
+</html>
