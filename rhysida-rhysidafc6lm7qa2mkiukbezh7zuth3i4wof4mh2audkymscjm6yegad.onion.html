@@ -77,8 +77,8 @@
 	</head>
 	<body>
 		<div class="container mb-5">
-						<p class="auctions position-relative bg-danger text-white py-2 px-4 rounded mt-2 border border-danger" style="width: fit-content; left: calc(75% - 180px); cursor: pointer;" id="auctions_online">8 auctions online</p>
-							<p class="position-relative bg-secondary text-white py-2 px-4 rounded mt-2 border border-secondary" style="width: fit-content; left: 75%; cursor: pointer; top: -58px;" id="companies_online">306 Companies</p>
+						<p class="auctions position-relative bg-danger text-white py-2 px-4 rounded mt-2 border border-danger" style="width: fit-content; left: calc(75% - 180px); cursor: pointer;" id="auctions_online">11 auctions online</p>
+							<p class="position-relative bg-secondary text-white py-2 px-4 rounded mt-2 border border-secondary" style="width: fit-content; left: 75%; cursor: pointer; top: -58px;" id="companies_online">308 Companies</p>
 			<div class="w-100 mt-5">
 				<img src="./logos/logo.png" class="d-inline-block align-top rounded float-start w-100" alt="logo" />
 			</div>
@@ -115,6 +115,13 @@
 								<button type="button" class="btn btn-secondary" id="token_send">Send</button>
 							</div>
 						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row gx-5">
+				<div class="col gy-5">
+					<div class="border border-danger m-2 p-2 text-danger text-center token_warning">
+						<p class="mb-0">Please be attentive and cautious! Fraudulent activity by third parties has become more frequent. We never suggest continuing communication on other platforms. We are always ready to provide any proof that our tools work and that the files are available.</p>
 					</div>
 				</div>
 			</div>
@@ -456,9 +463,16 @@
 				// const response = await fetch( "https://api.alternative.me/v2/ticker/bitcoin/?convert=USD" );
 				// const result = await response.json();
 				// $( "#btc_usd_price" ).text( result.data[ 1 ].quotes.USD.price );
-				const response = await fetch( "https://blockchain.info/ticker" );
-				const result = await response.json();
-				$( "#btc_usd_price" ).text( result.USD.last.toFixed(0) );
+				
+				// const response = await fetch( "https://blockchain.info/ticker" );
+				// const result = await response.json();
+				// $( "#btc_usd_price" ).text( result.USD.last.toFixed(0) );
+				
+				const ws = new WebSocket( "wss://stream.binance.com:9443/ws/btcusdt@trade" );
+				ws.onmessage = (event) => {
+					const result = JSON.parse( event.data );
+					$( "#btc_usd_price" ).text( result.p.split( "." )[ 0 ] );
+				};
 			};
 			$( function() {
 				$( document ).on( "focusin", "input#token_check", function() {
